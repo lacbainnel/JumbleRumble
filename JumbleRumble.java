@@ -8,10 +8,16 @@ import java.util.Scanner;
 public class JumbleRumble {
     Integer score = 0;
     Integer guess = 5;
-    private static final ArrayList<String> easy1_words = new ArrayList<String> 
+    private static final ArrayList<String> easy1_store = new ArrayList<String> 
         (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
                          "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
                          "art", "eat", "ape", "wet", "raw"));
+//    private static final ArrayList<String> easy1_words = new ArrayList<String> 
+//        (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
+//                         "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
+//                         "art", "eat", "ape", "wet", "raw"));   
+    private static final ArrayList<String> easy1_words = new ArrayList<String> 
+        (Arrays.asList("ear", "pat", "tap"));      
     private static ArrayList<String> easy1_guess = new ArrayList<String> ();
     //private static final ArrayList<String> score2_easy1 = new ArrayList<String> (Arrays.asList("era", "apt", "own", "opt", "act"));
     //private static final String[] score1_easy1 = new String[] {"ear", "pat", "won", "top", "cat"};
@@ -28,7 +34,101 @@ public class JumbleRumble {
         //String test = Arrays.toString(score1_easy1);
         // String test = TextUtils.join("",score1_easy1);
         StringBuilder builder = new StringBuilder();
-        for(String s : easy1_words) {
+        for(String s : easy1_store) {
+            builder.append(s);
+        }
+        String str = builder.toString();
+        //System.out.println(str);
+
+        Random r = new Random();
+        String word = scramble(r, str);
+        System.out.println(word);
+
+        while (guess != 0) {
+//            if (!easy1_words.isEmpty()) {
+//            System.out.println("Enter a 3-letter word: ");
+//            String guessWord = sc.nextLine();
+//            for (int i=0; i<easy1_store.size(); i++) {
+////                if (easy1_words.isEmpty()) {
+////                    System.out.println("You have already guessed all of the words! Congratulations!");
+////                                jr.easyLevelTwo();
+////                                break;                      
+////                } else {
+//                        if (easy1_store.contains(guessWord)) {
+//                            
+//                                System.out.println("You got it! You gained 1 point!");
+//                                easy1_words.remove(guessWord);
+//                                easy1_guess.add(guessWord);
+//                                score += 1;
+//                                break;                                 
+//                            
+//                   
+//                        } else if (easy1_guess.contains(guessWord)) {
+//                            --guess;
+//                            System.out.println("You have already guessed this word! You only have " + guess + " guesses left!");
+//                            break;    
+//                        } else {
+//                            --guess;
+//                            System.out.println("Wrong! You only have " + guess + " guesses left!");
+//                            break;                           
+//                        } 
+//                        
+//                }
+//
+// 
+//
+////                    } else {
+////                    System.out.println("You have already guessed all of the words! Congratulations!");
+////                    break;
+//                                 
+//                
+//
+//            } else {
+//                System.out.println("You have already guessed all of the words! Congratulations!");
+//                jr.easyLevelTwo();
+//            }
+        
+
+            if (!easy1_words.isEmpty()) {
+                System.out.println("Enter a 3-letter word: ");
+                String guessWord = sc.nextLine();
+                
+                for (int i=0; i<easy1_store.size(); i++) {
+                    if (easy1_store.contains(guessWord)) {
+                        if (easy1_guess.contains(guessWord)) {
+                            --guess;
+                            System.out.println("You have already guessed this word! You only have " + guess + " guesses left!");
+                            break;                              
+                        } else {
+                            System.out.println("You got it! You gained 1 point!");
+                            easy1_words.remove(guessWord);
+                            easy1_guess.add(guessWord);
+                            score += 1;
+                            break;                             
+                        }
+                    } else {
+                        --guess;
+                        System.out.println("Wrong! You only have " + guess + " guesses left!");
+                        break;                           
+                    }      
+                }
+            } else {
+                System.out.println("You have already guessed all of the words! Congratulations!");
+                System.out.println("Score: " + score);
+                jr.easyLevelTwo();
+            }       
+        }
+        System.out.println("Score: " + score);
+    }
+ 
+    //for further edit
+    private void easyLevelTwo() {
+        //JumbleRumble jr = new JumbleRumble();
+        Scanner sc = new Scanner(System.in);
+        //String test = Arrays.toString(score1_easy1);
+        // String test = TextUtils.join("",score1_easy1);
+        StringBuilder builder = new StringBuilder();
+        for(String s : easy1_store) {
             builder.append(s);
         }
         String str = builder.toString();
@@ -40,24 +140,12 @@ public class JumbleRumble {
 
         while (guess != 0) {
             System.out.println("Enter a 3-letter word: ");
-            String guessWord = sc.nextLine();
-            for (int i=0; i<easy1_words.size(); i++) {
-                if (easy1_words.contains(guessWord)) {
-                    if (easy1_guess.contains(guessWord)) {
-                        if (easy1_guess.equals(easy1_words)) {
-                            System.out.println("You have guessed all words! Congratulations!");
-                            //jr.easyLevelTwo();
-                        } else {
-                            --guess;
-                            System.out.println("You have already guessed this word! You only have " + guess + " guesses left!");
-                            break;
-                        }                       
-                    } else {
-                        System.out.println("You got it! You gained 1 point!");
-                        easy1_guess.add(guessWord);
-                        score += 1;
-                        break;
-                    } 
+            String word1 = sc.nextLine();
+            for (int i=0; i<easy1_store.size(); i++) {
+                if (easy1_store.contains(word1)) {
+                    System.out.println("You got it! You gained 1 point!");
+                    score += 1;
+                    break;
                 } else {
                     --guess;
                     System.out.println("Wrong! You only have " + guess + " guesses left!");
@@ -67,51 +155,11 @@ public class JumbleRumble {
         }
         if (score == 5) {
             System.out.println("You obtained a perfect score! You will not progree to Level 2!");
-            //jr.easyLevelTwo();
         } else {
             System.out.println("Your score: " + score);
         }
         
-    }
-    
-//    private void easyLevelTwo() {
-//        //JumbleRumble jr = new JumbleRumble();
-//        Scanner sc = new Scanner(System.in);
-//        //String test = Arrays.toString(score1_easy1);
-//        // String test = TextUtils.join("",score1_easy1);
-//        StringBuilder builder = new StringBuilder();
-//        for(String s : score1_easy1) {
-//            builder.append(s);
-//        }
-//        String str = builder.toString();
-//        //System.out.println(str);
-//
-//        Random r = new Random();
-//        String word = scramble(r, str);
-//        System.out.println(word);
-//
-//        while (guess != 0) {
-//            System.out.println("Enter a 3-letter word: ");
-//            String word1 = sc.nextLine();
-//            for (int i=0; i<score1_easy1.size(); i++) {
-//                if (score1_easy1.contains(word1)) {
-//                    System.out.println("You got it! You gained 1 point!");
-//                    score += 1;
-//                    break;
-//                } else {
-//                    --guess;
-//                    System.out.println("Wrong! You only have " + guess + " guesses left!");
-//                    break;
-//                }
-//            }
-//        }
-//        if (score == 5) {
-//            System.out.println("You obtained a perfect score! You will not progree to Level 2!");
-//        } else {
-//            System.out.println("Your score: " + score);
-//        }
-//        
-//    }    
+    }    
 
     public static String scramble(Random random, String inputString ) {
     // Convert your string into a simple char array:
