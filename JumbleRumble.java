@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class JumbleRumble {
     Integer score = 0;
     Integer guess = 3;
-    private static final ArrayList<String> score1_easy1 = new ArrayList<String> (Arrays.asList("ear", "pat", "won", "top", "cat"));
-    private static final ArrayList<String> score2_easy1 = new ArrayList<String> (Arrays.asList("era", "apt", "own", "opt", "act"));
+    private static final ArrayList<String> score1_easy1 = new ArrayList<String> (Arrays.asList("ear", "pat", "won", "top", "cat", "era", "apt", "own", "opt", "act"));
+    //private static final ArrayList<String> score2_easy1 = new ArrayList<String> (Arrays.asList("era", "apt", "own", "opt", "act"));
     //private static final String[] score1_easy1 = new String[] {"ear", "pat", "won", "top", "cat"};
     //private static final String[] score2_easy1 = new String[] {"era", "apt", "own", "opt", "act"};
 
@@ -40,11 +40,13 @@ public class JumbleRumble {
                     score += 1;
                     break;
                 } else {
-                    if (score2_easy1.contains(word1)) {
-                        System.out.println("You got it! You gained 2 points!");
-                        score += 2;
-                        break;
-                    }
+                    System.out.println("Wrong! You only have " + guess + " guesses left!");
+                    guess--;
+                    // if (score2_easy1.contains(word1)) {
+                    //     System.out.println("You got it! You gained 2 points!");
+                    //     score += 2;
+                    //     break;
+                    // }
                     // }  else {
                     //     System.out.println("Wrong! You only have " + guess + " guesses left!");
                     //     guess--;
@@ -78,99 +80,3 @@ public class JumbleRumble {
     return new String( a );
     }
 }
-
-
-// import java.util.Scanner;
-// import java.util.concurrent.ThreadLocalRandom;
- 
-// // How to create a Jumble word game in Java
- 
-// public class JumbleRumble {
- 
-//     private static final String[] WORDS_DATABASE = new String[] {
-//         "superman","jungle","programmer","letter","house","helium"
-//     };
-     
-//     public static void main(String[] args) {
-//         JumbleRumble jg = new JumbleRumble();
-//         jg.startGame();
-//     }
- 
-//     /**
-//      * Run a game of Jumble in Java. The steps in the game are,
-//      * 1. Get a random word from the words database
-//      * 2. Shuffle/jumble the word by randomly shuffling characters
-//      * 3. Present the jumbled word to the user and ask him to guess the word.
-//      * 4. Repeat the guess till answer is found or user decides to quit.
-//      */
-//     private void startGame() {
-//         int numberOfGuesses = 0;
-//         String original = selectRandomWord();
-//         String shuffled = getShuffledWord(original);
-//         boolean gameOn = true;
-//         while(gameOn) {
-//             System.out.println("Shuffled word is: "+shuffled);
-//             numberOfGuesses++;
-//             String userGuess = getUserGuess();
-//             if(original.equalsIgnoreCase(userGuess)) {
-//                 System.out.println("Congratulations! You found the word in "+numberOfGuesses+" guesses");
-//                 gameOn = false;
-//             }else {
-//                 System.out.println("Sorry, Wrong answer");
-//             }
-//         }        
-//     }
-     
-//     /**
-//      * Get the user's word guess from command line
-//      * @return 
-//      */
-//     public String getUserGuess() {
-//         Scanner sn = new Scanner(System.in);
-//         System.out.println("Please type in the original word: ");
-//         return sn.nextLine();
-//     }
-     
-//     /**
-//      * Select a random word from the WORDS_DATABASE array.
-//      * @return 
-//      */
-//     public String selectRandomWord() {
-//         int rPos = ThreadLocalRandom.current().nextInt(0, WORDS_DATABASE.length);
-//         return WORDS_DATABASE[rPos];
-//     }
-     
-//     /**
-//      * Shuffle the original word by randomly swapping characters 10 times
-//      * @param original
-//      * @return 
-//      */
-//     public String getShuffledWord(String original) {
-//         String shuffledWord = original; // start with original
-//         int wordSize = original.length();
-//         int shuffleCount = 10; // let us randomly shuffle letters 10 times
-//         for(int i=0;i<shuffleCount;i++) {
-//             //swap letters in two indexes
-//             int position1 = ThreadLocalRandom.current().nextInt(0, wordSize);
-//             int position2 = ThreadLocalRandom.current().nextInt(0, wordSize);
-//             shuffledWord = swapCharacters(shuffledWord,position1,position2);
-//         }
-//         return shuffledWord;
-//     }
- 
-//     /**
-//      * Swaps characters in a string using the given character positions
-//      * @param shuffledWord
-//      * @param position1
-//      * @param position2
-//      * @return 
-//      */
-//     private String swapCharacters(String shuffledWord, int position1, int position2) {
-//         char[] charArray = shuffledWord.toCharArray();
-//         // Replace with a "swap" function, if desired:
-//         char temp = charArray[position1];
-//         charArray[position1] = charArray[position2];
-//         charArray[position2] = temp;
-//         return new String(charArray);
-//     }
-// }
