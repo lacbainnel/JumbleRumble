@@ -1,9 +1,14 @@
 //package com.mycompany.jumblerumble;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
+
 
 public class JumbleRumble {
     Integer score = 0;
@@ -33,8 +38,8 @@ public class JumbleRumble {
     private static ArrayList<String> easy2_guess = new ArrayList<String> ();    
 
     public static void main (String[] args) {
-        JumbleRumble jr = new JumbleRumble();
-        jr.easyLevelOne();
+        File bg = new File("bg.wav");
+        playMusic(bg);
     }
 
     private void easyLevelOne() {
@@ -193,6 +198,33 @@ public class JumbleRumble {
         }       
 
         return new String(a);
+    }
+
+    // public static void playMusic (String filepath) {
+    //     InputStream music;
+         
+    //     try {
+    //         music = new FileInputStream (new File(filepath));
+    //         AudioStream audios = new AudioStream (music);
+    //         AudioPlayer.player.start(audios);
+    //     } catch (Exception e) {
+    //         System.out.println("no music");
+    //     }
+    // }
+
+    public static void playMusic (File Sound) {
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open (AudioSystem.getAudioInputStream(Sound));
+            clip.start();
+
+            JumbleRumble jr = new JumbleRumble();
+            jr.easyLevelOne();
+
+            Thread.sleep(clip.getMicrosecondLength()/1000);
+        } catch (Exception e) {
+            System.out.println("no music found");
+        }
     }
 }
 
