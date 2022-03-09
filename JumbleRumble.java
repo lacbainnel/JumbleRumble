@@ -1,17 +1,4 @@
-//package com.mycompany.jumblerumble;
-
-// import java.io.File;
-// import java.io.InputStream;
-// import java.util.ArrayList;
-// import java.util.Arrays;
-// import java.util.Random;
-// import java.util.Scanner;
-// import javax.sound.sampled.Clip;
-// import javax.swing.JButton;
-// import javax.swing.JFrame;
-// import javax.sound.sampled.AudioSystem;
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -20,131 +7,91 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-//import javax.print.DocFlavor.URL;
 import javax.sound.sampled.AudioSystem;
 import  java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 
 public class JumbleRumble {
     Integer score = 0;
     Integer guess = 5;
+
+    //FOR EASY LEVEL 1
     private static final ArrayList<String> baseletters_easy1 = new ArrayList<String> (Arrays.asList("e", "a", "r", "p", "t", "n", "o", "w"));  
-    private static final ArrayList<String> baseletters_easy2 = new ArrayList<String> (Arrays.asList("a", "c", "n", "e", "b", "t", "i", "s", "u")); 
     private static final ArrayList<String> easy1_store = new ArrayList<String> 
         (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
                          "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
                          "art", "eat", "ape", "wet", "raw"));
-//    private static final ArrayList<String> easy1_words = new ArrayList<String> 
-//        (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
-//                         "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
-//                         "art", "eat", "ape", "wet", "raw"));   
-    private static final ArrayList<String> easy1_words = new ArrayList<String> 
-        (Arrays.asList("ear", "pat", "tap"));      
+   private static final ArrayList<String> easy1_words = new ArrayList<String> 
+       (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
+                        "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
+                        "art", "eat", "ape", "wet", "raw"));   
+    // private static final ArrayList<String> easy1_words = new ArrayList<String> 
+    //     (Arrays.asList("ear", "pat", "tap"));      
     private static ArrayList<String> easy1_guess = new ArrayList<String> ();
 
+    //FOR EASY LEVEL 2
+    private static final ArrayList<String> baseletters_easy2 = new ArrayList<String> (Arrays.asList("a", "c", "n", "e", "b", "t", "i", "s", "u")); 
     private static final ArrayList<String> easy2_store = new ArrayList<String> 
         (Arrays.asList("acne", "bane", "bent", "cane", "nice", "bait", "bean", "nabe", "cine",
                         "just", "jest", "cute", "ices", "cite", "tics", "cuts", "jets", "sice", "cist",
                         "scut", "suit", "seat", "cues", "ties"));
-//    private static final ArrayList<String> easy1_words = new ArrayList<String> 
-//        (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
-//                         "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
-//                         "art", "eat", "ape", "wet", "raw"));   
-    private static final ArrayList<String> easy2_words = new ArrayList<String> 
-        (Arrays.asList("acne", "bane", "bent"));      
-    private static ArrayList<String> easy2_guess = new ArrayList<String> ();    
+   private static final ArrayList<String> easy2_words = new ArrayList<String> 
+       (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
+                        "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
+                        "art", "eat", "ape", "wet", "raw"));   
+    // private static final ArrayList<String> easy2_words = new ArrayList<String> 
+    //     (Arrays.asList("acne", "bane", "bent"));      
+    private static ArrayList<String> easy2_guess = new ArrayList<String> ();  
+    
+    //FOR VOLUME SETTINGS
     static float previousVolume = 0;
     static float currentVolume = 0;
     static FloatControl fc;
     static Boolean mute = false;
 
     public static void main (String[] args) {
-        File bg = new File("bg.wav");
-        playMusic(bg);
+        //invoking the background music to play all throughout the game
+        File music = new File("bg.wav");
+        playMusic(music);
     }
 
+    //FUNCTION FOR EASY LEVEL ONE
     private void easyLevelOne() {
         JumbleRumble jr = new JumbleRumble();
         Scanner sc = new Scanner(System.in);
-        //String test = Arrays.toString(score1_easy1);
-        // String test = TextUtils.join("",score1_easy1);
         StringBuilder builder = new StringBuilder();
-        for(String s : baseletters_easy1) {
+
+        for (String s:baseletters_easy1) {
             builder.append(s);
         }
         String str = builder.toString();
-        //System.out.println(str);
 
         Random r = new Random();
-        String word = scramble(r, str);
-        System.out.println(word);
+        String scrambledLetters1 = scramble(r, str);
+        System.out.println(scrambledLetters1);
 
         while (guess != 0) {
-//            if (!easy1_words.isEmpty()) {
-//            System.out.println("Enter a 3-letter word: ");
-//            String guessWord = sc.nextLine();
-//            for (int i=0; i<easy1_store.size(); i++) {
-////                if (easy1_words.isEmpty()) {
-////                    System.out.println("You have already guessed all of the words! Congratulations!");
-////                                jr.easyLevelTwo();
-////                                break;                      
-////                } else {
-//                        if (easy1_store.contains(guessWord)) {
-//                            
-//                                System.out.println("You got it! You gained 1 point!");
-//                                easy1_words.remove(guessWord);
-//                                easy1_guess.add(guessWord);
-//                                score += 1;
-//                                break;                                 
-//                            
-//                   
-//                        } else if (easy1_guess.contains(guessWord)) {
-//                            --guess;
-//                            System.out.println("You have already guessed this word! You only have " + guess + " guesses left!");
-//                            break;    
-//                        } else {
-//                            --guess;
-//                            System.out.println("Wrong! You only have " + guess + " guesses left!");
-//                            break;                           
-//                        } 
-//                        
-//                }
-//
-// 
-//
-////                    } else {
-////                    System.out.println("You have already guessed all of the words! Congratulations!");
-////                    break;
-//                                 
-//                
-//
-//            } else {
-//                System.out.println("You have already guessed all of the words! Congratulations!");
-//                jr.easyLevelTwo();
-//            }
-        
-
-            if (!easy1_words.isEmpty()) {
+            if (!easy1_words.isEmpty()) { //checks if wordbank is empty
                 System.out.println("Enter a 3-letter word: ");
                 String guessWord = sc.nextLine();
                 
-                for (int i=0; i<easy1_store.size(); i++) {
-                    if (easy1_store.contains(guessWord)) {
-                        if (easy1_guess.contains(guessWord)) {
+                //checks if guess matches wordbank
+                for (int i=0; i<easy1_store.size(); i++) { 
+                    if (easy1_store.contains(guessWord)) { //if it's in wordbank
+                        if (easy1_guess.contains(guessWord)) { //checks if it was already guessed
                             --guess;
                             System.out.println("You have already guessed this word! You only have " + guess + " guesses left!");
                             break;                              
-                        } else {
+                        } else { //newly guessed word matches the one on wordbank
                             System.out.println("You got it! You gained 1 point!");
                             easy1_words.remove(guessWord);
                             easy1_guess.add(guessWord);
                             score += 1;
                             break;                             
                         }
-                    } else {
+                    } else { //not in wordbank
                         --guess;
                         System.out.println("Wrong! You only have " + guess + " guesses left!");
                         break;                           
@@ -153,28 +100,25 @@ public class JumbleRumble {
             } else {
                 System.out.println("You have already guessed all of the words! Congratulations!");
                 System.out.println("Score: " + score);
-                jr.easyLevelTwo();
+                jr.easyLevelTwo(); //goes to the next level
             }       
         }
-        //System.out.println("Score: " + score);
+        sc.close();
     }
  
-    //for further edit
+    //FUNCTION FOR EASY LEVEL TWO
     private void easyLevelTwo() {
-        JumbleRumble jr = new JumbleRumble();
         Scanner sc = new Scanner(System.in);
-        //String test = Arrays.toString(score1_easy1);
-        // String test = TextUtils.join("",score1_easy1);
         StringBuilder builder = new StringBuilder();
-        for(String s : baseletters_easy2) {
+
+        for (String s:baseletters_easy2) {
             builder.append(s);
         }
         String str = builder.toString();
-        //System.out.println(str);
 
         Random r = new Random();
-        String word = scramble(r, str);
-        System.out.println(word);
+        String scrambledLetters2 = scramble(r, str);
+        System.out.println(scrambledLetters2);
 
         while (guess != 0) {
             if (!easy2_words.isEmpty()) {
@@ -204,19 +148,20 @@ public class JumbleRumble {
                 System.out.println("You have already guessed all of the words! Congratulations!");
                 System.out.println("Score: " + score);
                 System.exit(0);
-                //jr.easyLevelThree();
+                //TODO insert easy level three
             }       
-        }       
+        } 
+        sc.close();      
     }    
 
-    public static String scramble(Random random, String inputString ) {
-        // Convert your string into a simple char array:
-        char a[] = inputString.toCharArray();
+    public static String scramble (Random random, String lettersToScramble) {
+        //convert your string into a simple char array:
+        char a[] = lettersToScramble.toCharArray();
 
-        // Scramble the letters using the standard Fisher-Yates shuffle, 
-        for (int i=0 ; i<a.length ; i++) {
+        //scramble the letters using the standard Fisher-Yates shuffle 
+        for (int i=0; i<a.length; i++) {
             int j = random.nextInt(a.length);
-            // Swap letters
+            //swap letters
             char temp = a[i]; 
             a[i] = a[j];  
             a[j] = temp;
@@ -225,18 +170,7 @@ public class JumbleRumble {
         return new String(a);
     }
 
-    // public static void playMusic (String filepath) {
-    //     InputStream music;
-         
-    //     try {
-    //         music = new FileInputStream (new File(filepath));
-    //         AudioStream audios = new AudioStream (music);
-    //         AudioPlayer.player.start(audios);
-    //     } catch (Exception e) {
-    //         System.out.println("no music");
-    //     }
-    // }
-
+    //SOUND SETTINGS
     public static void playMusic (File Sound) {
         JFrame f = new JFrame();
         GridLayout gl = new GridLayout(1,3);
@@ -250,6 +184,7 @@ public class JumbleRumble {
                 currentVolume += 1.0f;
 
                 if (currentVolume > 6.0) {
+                    //max volume is 6.0f
                     currentVolume = 6.0f;
                 }
                 fc.setValue(currentVolume);
@@ -264,6 +199,7 @@ public class JumbleRumble {
                 currentVolume -= 1.0f;
 
                 if (currentVolume < -80.0f) {
+                    //min volume is -80.0f
                     currentVolume = -80.0f;
                 }
         
@@ -277,6 +213,8 @@ public class JumbleRumble {
             @Override
             public void actionPerformed (ActionEvent e) {
                 if (mute == false) {
+                    //prev vol is stored so when the users unmutes, it will 
+                    //go back to prev vol before it was muted
                     previousVolume = currentVolume;
                     currentVolume = -80.0f;
                     fc.setValue(currentVolume);
@@ -293,7 +231,6 @@ public class JumbleRumble {
         f.pack();
         f.setVisible(true);
 
-
         try {
             Clip clip = AudioSystem.getClip();
             clip.open (AudioSystem.getAudioInputStream(Sound));
@@ -309,38 +246,3 @@ public class JumbleRumble {
         }
     }
 }
-
-// import javax.swing.*;
-// import sun.audio.*;
-// import java.awt.event.*;
-// import java.io.*;
-// public class JumbleRumble {
-// public static void main(String[] args)
-// {
-// JFrame frame = new JFrame();
-// frame.setSize(200,200);
-// JButton button = new JButton("Click me");
-// frame.add(button);
-// button.addActionListener(new AL());
-// frame.setVisible(true);
-// }
-// public static class AL implements ActionListener{
-// public final void actionPerformed(ActionEvent e){
-// music();
-// }
-// }
-// public static void music(){
-// AudioPlayer MGP = AudioPlayer.player;
-// AudioStream BGM;
-// AudioData MD;
-// ContinuousAudioDataStream loop = null;
-// try{
-// BGM = new AudioStream(new FileInputStream("C:\\test\\ha.wav"));
-// MD = BGM.getData();
-// loop = new ContinuousAudioDataStream(MD);
-// }catch(IOException error){
-// System.out.print("file not found");
-// }
-// MGP.start(loop);
-// }
-// }
