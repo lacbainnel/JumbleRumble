@@ -21,11 +21,11 @@ public class JumbleRumble {
     private static final ArrayList<String> baseletters_easy1 = new ArrayList<String> (Arrays.asList("e", "a", "r", "p", "t", "n", "o", "w"));  
     private static final ArrayList<String> easy1_store = new ArrayList<String> 
         (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
-                         "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
+                         "own", "opt", "act", "row", "tow", "ton", "war",  "oat", "are", "ate" ,
                          "art", "eat", "ape", "wet", "raw"));
    private static final ArrayList<String> easy1_words = new ArrayList<String> 
        (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
-                        "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
+                        "own", "opt", "act", "row", "tow", "ton", "war",  "oat", "are", "ate" ,
                         "art", "eat", "ape", "wet", "raw"));   
     // private static final ArrayList<String> easy1_words = new ArrayList<String> 
     //     (Arrays.asList("ear", "pat", "tap"));      
@@ -38,9 +38,9 @@ public class JumbleRumble {
                         "just", "jest", "cute", "ices", "cite", "tics", "cuts", "jets", "sice", "cist",
                         "scut", "suit", "seat", "cues", "ties"));
    private static final ArrayList<String> easy2_words = new ArrayList<String> 
-       (Arrays.asList("ear", "pat", "tap", "now", "won", "pot", "top", "cat", "era", "apt", 
-                        "own", "opt", "act", "row", "tow", "tap", "war",  "oat", "are", "ate" ,
-                        "art", "eat", "ape", "wet", "raw"));   
+       (Arrays.asList("acne", "bane", "bent", "cane", "nice", "bait", "bean", "nabe", "cine",
+                        "just", "jest", "cute", "ices", "cite", "tics", "cuts", "jets", "sice", "cist",
+                        "scut", "suit", "seat", "cues", "ties"));   
     // private static final ArrayList<String> easy2_words = new ArrayList<String> 
     //     (Arrays.asList("acne", "bane", "bent"));      
     private static ArrayList<String> easy2_guess = new ArrayList<String> ();  
@@ -74,6 +74,7 @@ public class JumbleRumble {
 
         while (guess != 0) {
             if (!easy1_words.isEmpty()) { //checks if wordbank is empty
+                System.out.println(easy1_words.size());
                 System.out.println("Enter a 3-letter word: ");
                 String guessWord = sc.nextLine();
                 
@@ -83,11 +84,13 @@ public class JumbleRumble {
                         if (easy1_guess.contains(guessWord)) { //checks if it was already guessed
                             --guess;
                             System.out.println("You have already guessed this word! You only have " + guess + " guesses left!");
+                            //System.out.println(easy1_words.size());
                             break;                              
                         } else { //newly guessed word matches the one on wordbank
                             System.out.println("You got it! You gained 1 point!");
                             easy1_words.remove(guessWord);
                             easy1_guess.add(guessWord);
+                            //System.out.println(easy1_words.size());
                             score += 1;
                             break;                             
                         }
@@ -101,7 +104,14 @@ public class JumbleRumble {
                 System.out.println("You have already guessed all of the words! Congratulations!");
                 System.out.println("Score: " + score);
                 jr.easyLevelTwo(); //goes to the next level
-            }       
+            } 
+        }
+    
+
+        if (guess == 0) {
+            System.out.println("Thank you for playing Word War 1: Jumble Rumble");
+            System.out.println("Score: " + score);
+            System.exit(0);
         }
         sc.close();
     }
